@@ -27,6 +27,7 @@ const reducer = (state = initialState, action) => {
         if (!state.car.features.includes(action.payload)) {
         return({
                 ...state,
+                additionalPrice: (state.additionalPrice + action.payload.price),
                 car: {
                     ...state.car,
                     features: [...state.car.features, action.payload]
@@ -35,6 +36,15 @@ const reducer = (state = initialState, action) => {
         } else {
             return state;
         }
+        case("REMOVE_FEATURE"):
+            const { id } = action.payload;
+            return({
+                ...state,
+                car: {
+                    ...state.car,
+                    features: state.car.features.filter(feature => feature.id !== id)
+                }
+            })
         default:
             return(state);
         }
